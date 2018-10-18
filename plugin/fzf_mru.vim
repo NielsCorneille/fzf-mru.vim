@@ -37,14 +37,14 @@ function! s:fzf_mru(...) abort
 endfunction
 
 function! s:fzf_mru_preview(...) abort
-  let options = {
-        \   'source': s:fzf_mru_source(),
-        \   'options': '--prompt "MRU> " ' . s:params(a:000),
-        \ }
-  let extra = extend(copy(get(g:, 'fzf_layout', {'down': '~40%'})), options)
-  let options_with_preview = extend(extra, fzf#vim#with_preview())
+  let layout_options = copy(get(g:, 'fzf_layout', {'down': '~40%'}))
+  let config = fzf#vim#with_preview(extend(
+        \ layout_options,
+        \ {'source': s:fzf_mru_source()}
+        \ ))
+  call extend(config['options'], ['--prompt',"MRU> "])
 
-  call fzf#run(fzf#wrap('name', options_with_preview, 0))
+  call fzf#run(fzf#wrap('name', config, 0))
 endfunction
 
 command! -nargs=* FZFMru call s:fzf_mru(<q-args>)
