@@ -31,13 +31,13 @@ function! s:fzf_mru(...) abort
         \   'source': s:fzf_mru_source(),
         \   'options': '--prompt "MRU> " ' . s:params(a:000),
         \ }
-  let extra = extend(copy(get(g:, 'fzf_layout', {'down': '~40%'})), options)
+  let extra = extend(copy(get(g:, 'fzf_layout', {'window': { 'width': 0.9, 'height': 0.6}})), options)
 
   call fzf#run(fzf#wrap('name', extra, 0))
 endfunction
 
 function! s:fzf_mru_preview(...) abort
-  let layout_options = copy(get(g:, 'fzf_layout', {'down': '~40%'}))
+  let layout_options = copy(get(g:, 'fzf_layout', { 'width': 0.9, 'height': 0.6}))
   let config = fzf#vim#with_preview(extend(
         \ layout_options,
         \ {'source': s:fzf_mru_source()}
